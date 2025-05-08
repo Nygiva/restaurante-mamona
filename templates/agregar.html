@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Agregar Plato</title>
+</head>
+<body>
+    <h1>Agregar Nuevo Plato</h1>
+    <form action="{{ url_for('agregar') }}" method="POST" enctype="multipart/form-data">
+        <label for="nombre">Nombre del plato:</label><br>
+        <input type="text" id="nombre" name="nombre" required><br><br>
+
+        <label for="precio">Precio del plato:</label><br>
+        <input type="text" id="precio" name="precio" required><br><br>
+
+        <label for="descripcion">Descripción del plato:</label><br>
+        <textarea id="descripcion" name="descripcion" rows="4" cols="40" required></textarea><br><br>
+
+        <label for="imagen">Imagen del plato (subir archivo):</label><br>
+        <input type="file" id="imagen" name="imagen" accept="image/*" required><br><br>
+
+        <button type="submit">Agregar Plato</button>
+    </form>
+    <a href="{{ url_for('index') }}">Volver al Menú</a>
+</body>
+</html>

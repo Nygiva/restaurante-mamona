@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Administrador</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+
+    <h1>Administración del Menú</h1>
+
+    <a href="{{ url_for('logout') }}">
+        <button>Cerrar sesión</button>
+    </a>
+
+    <h2>Agregar un Plato</h2>
+    <form method="POST" enctype="multipart/form-data">
+        <input type="text" name="nombre" placeholder="Nombre del plato" required><br>
+        <input type="text" name="precio" placeholder="Precio" required><br>
+        <input type="file" name="imagen"><br>
+        <button type="submit">Agregar Plato</button>
+    </form>
+
+    <h2>Platos en el Menú</h2>
+    <ul>
+        {% for plato in platos %}
+        <li>{{ plato.nombre }} - {{ plato.precio }}€ <img src="{{ plato.imagen_url }}" alt="{{ plato.nombre }}" width="100"></li>
+        {% endfor %}
+    </ul>
+
+</body>
+</html>

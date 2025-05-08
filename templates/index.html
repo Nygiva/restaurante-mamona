@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&display=swap" rel="stylesheet">
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Menú del Restaurante</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>La marota</h1>
+
+        <!-- Contenedor de los platos -->
+        <div class="platos-grid">
+            {% for plato in platos %}
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <!-- Parte frontal de la tarjeta -->
+                        <div class="flip-card-front">
+                            <img src="{{ plato[3] }}" alt="Imagen del plato">
+                            <h3>{{ plato[1] }}</h3>
+                            <p><strong>Precio:</strong> ${{ plato[2] }}</p>
+                        </div>
+
+                        <!-- Parte trasera de la tarjeta -->
+                        <div class="flip-card-back">
+                            <h3>{{ plato[1] }}</h3> <!-- Nombre del plato -->
+                            <p>{{ plato[4] }}</p> <!-- Descripción del plato -->
+                            {% if session.get('usuario') %}
+                                <div class="admin-buttons">
+                                    <a href="{{ url_for('editar', plato_id=plato[0]) }}">Editar</a>
+                                    <form action="{{ url_for('eliminar', plato_id=plato[0]) }}" method="POST" style="display:inline;">
+                                        <button type="submit" onclick="return confirm('¿Eliminar este plato?');">Eliminar</button>
+                                    </form>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Aquí está el mensaje de bienvenida o el botón de iniciar sesión -->
+        <div class="card-session">
+            {% if session['usuario'] %}
+                <p>Bienvenido, {{ session['usuario'] }}. <a href="{{ url_for('logout') }}">Cerrar sesión</a></p>
+                <a href="{{ url_for('agregar') }}">Agregar un nuevo plato</a>
+            {% else %}
+                <p><a href="{{ url_for('login') }}">Iniciar sesión como administrador</a></p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
+
